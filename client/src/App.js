@@ -1,11 +1,20 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {
+  const [ loading, setLoading ] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <LoadingSpinner isLoading={ loading } />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
