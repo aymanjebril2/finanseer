@@ -122,7 +122,7 @@ const SingUp = () => {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiratio, marketing promotions and updates via email."
+                label="I Agree on Terms and Conditions agreement and  a Privacy Policy ."
               />
             </Grid>
           </Grid>
