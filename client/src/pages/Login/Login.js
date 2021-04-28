@@ -15,9 +15,14 @@ import Container from "@material-ui/core/Container";
 
 const Copyright = () => {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography
+      variant="body2"
+      color="textSecondary"
+      align="center"
+      style={{ color: "rgba(121,9,113,1)" }}
+    >
       {"Copyright © "}
-      <Link color="inherit" href="">
+      <Link color="inherit" href="" style={{ color: "rgba(121,9,113,1)" }}>
         Finanseer
       </Link>{" "}
       {new Date().getFullYear()}
@@ -42,6 +47,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "rgba(121,9,113,1)",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "black",
+    },
   },
 }));
 
@@ -89,7 +99,8 @@ const Login = () => {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            // color="rgba(121,9,113,1)"
+
             className={classes.submit}
           >
             Sign In
