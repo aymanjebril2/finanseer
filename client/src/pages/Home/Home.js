@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import "./Home.css";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -11,8 +12,9 @@ const Home = () => {
   }, []);
   return (
     <div>
-      <LoadingSpinner isLoading={loading} />
-      <h1> this home page </h1>
+      <div className="Loading_Spinner">
+        <LoadingSpinner isLoading={loading} />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,12 +13,26 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import "./Login.css";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "rgba(121,9,113,1)",
+    },
+  },
+});
 
 const Copyright = () => {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography
+      variant="body2"
+      color="textSecondary"
+      align="center"
+      style={{ color: "rgba(121,9,113,1)" }}
+    >
       {"Copyright © "}
-      <Link color="inherit" href="">
+      <Link color="inherit" href="" style={{ color: "rgba(121,9,113,1)" }}>
         Finanseer
       </Link>{" "}
       {new Date().getFullYear()}
@@ -26,8 +41,11 @@ const Copyright = () => {
   );
 };
 const useStyles = makeStyles((theme) => ({
+  root: {
+    primary: "red",
+  },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(18),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -42,6 +60,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "rgba(121,9,113,1)",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#6F396D",
+    },
   },
 }));
 
@@ -59,49 +82,66 @@ const Login = () => {
           Sign in
         </Typography>
         <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
+          <ThemeProvider theme={theme}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+          </ThemeProvider>
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={
+              <Checkbox
+                value="remember"
+                style={{ color: "rgba(121,9,113,1)" }}
+              />
+            }
             label="Remember me"
           />
+          {/* {primary} */}
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            // color="rgba(121,9,113,1)"
+
             className={classes.submit}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link
+                href="#"
+                variant="body2"
+                style={{ color: "rgba(121,9,113,1)" }}
+              >
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/singup" variant="body2">
+              <Link
+                href="/singup"
+                variant="body2"
+                style={{ color: "rgba(121,9,113,1)" }}
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
