@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,9 +14,24 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "rgba(121,9,113,1)",
+    },
+    secondary: {
+      main: "#0000FF",
+    },
+  },
+});
+
 const Copyright = () => {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography
+      variant="body2"
+      style={{ color: "rgba(121,9,113,1)" }}
+      align="center"
+    >
       {"Copyright © "}
       <Link color="inherit" href="">
         Finanseer
@@ -28,7 +44,7 @@ const Copyright = () => {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(18),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -43,6 +59,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "rgba(121,9,113,1)",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#6F396D",
+    },
   },
 }));
 
@@ -69,59 +90,67 @@ const SingUp = () => {
         </Typography>
         <form className={classes.form}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                onChange={(e) => setFirstName(e.target.value)}
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                onChange={(e) => setLastName(e.target.value)}
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                onChange={(e) => setSignUpEmail(e.target.value)}
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                onChange={(e) => setSinUpPassowrd(e.target.value)}
-                autoComplete="current-password"
-              />
-            </Grid>
+            <ThemeProvider theme={theme}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  onChange={(e) => setLastName(e.target.value)}
+                  autoComplete="lname"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  onChange={(e) => setSignUpEmail(e.target.value)}
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  onChange={(e) => setSinUpPassowrd(e.target.value)}
+                  autoComplete="current-password"
+                />
+              </Grid>
+            </ThemeProvider>
+
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={
+                  <Checkbox
+                    value="allowExtraEmails"
+                    style={{ color: "rgba(121,9,113,1)" }}
+                  />
+                }
                 label="I Agree on Terms and Conditions agreement and  a Privacy Policy ."
               />
             </Grid>
@@ -138,7 +167,11 @@ const SingUp = () => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link
+                href="/login"
+                variant="body2"
+                style={{ color: "rgba(121,9,113,1)" }}
+              >
                 Already have an account? Sign in
               </Link>
             </Grid>
