@@ -1,2 +1,2 @@
-## FINANSEER 💵🔮
+## FINANSEER Client 💵🔮
 
