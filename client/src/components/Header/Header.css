@@ -1,0 +1,9 @@
+.logo_div {
+  display: flex;
+  flex: 1;
+}
+.logo_img {
+  height: 50px;
+  border: 3px solid plum;
+  border-radius: 50%;
+}
