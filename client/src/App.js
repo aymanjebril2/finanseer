@@ -1,32 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import LoadingSpinner from './components/LoadingSpinner';
+import React from "react";
+import "./App.css";
+import Home from "./pages/Home/Home";
+import SingUp from "./pages/SingUp/SingUp";
+import Login from "./pages/Login/Login";
+import { Switch, Route } from "react-router-dom";
+import Header from "./components/Header/Header";
 
 function App() {
-  const [ loading, setLoading ] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
-
   return (
     <div className="App">
-      <header className="App-header">
-        <LoadingSpinner isLoading={ loading } />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/signup" component={SingUp} />
+        <Route exact path="/login" component={Login} />
+      </Switch>
     </div>
   );
 }
