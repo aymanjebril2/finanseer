@@ -4,6 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import logo from "./img/crystal-ball.png";
 import Avatar from "@material-ui/core/Avatar";
+import { Link } from "react-router-dom";
 import "./Header.css";
 import { deepOrange } from "@material-ui/core/colors";
 
@@ -27,8 +28,11 @@ const Header = () => {
       <AppBar style={{ backgroundColor: "rgba(121,9,113,1)" }}>
         <Toolbar>
           <div className="logo_div">
-            <img src={logo} alt="fainaseer logo" className="logo_img" />
+            <Link to="/">
+              <img src={logo} alt="fainaseer logo" className="logo_img" />
+            </Link>
           </div>
+
           <div>
             <Avatar alt="" src="" className={classes.orange}>
               A
