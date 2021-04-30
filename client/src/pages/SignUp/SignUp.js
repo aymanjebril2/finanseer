@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -76,16 +77,12 @@ const SignUp = () => {
 
   const SignUpUser = async () => {
     console.log('first name:', firstName);
-    await fetch(`/api/register`, {
-      method: "POST",
-      body: JSON.stringify({
+    await axios.post(`/api/register`, {
         "firstName": firstName,
         "lastName": lastName,
         "email": signUpEmail,
         "password": signUpPassword
-      }),
-      headers: {"Content-type": "application/json; charset=UTF-8"}
-    })
+      })
   };
 
   return (
