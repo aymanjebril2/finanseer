@@ -18,27 +18,19 @@ const Home = () => {
   }, []);
   return (
     <div className="root_div_home">
-      <Grid
-        className={classes.grid}
-        container
-        spacing={0}
-        alignItems="center"
-        justify="center"
-        style={{ height: "100vh" }}
-      >
-        <Grid item xs={12} sm={4} className={classes.mobile}>
+      <div className="main_div">
+        <Main />
+      </div>
+
+      <div className="main_details">
+        <div className="details_div">
           <Details title="Income" />
-        </Grid>
-        <Grid ref={main} item xs={12} sm={3} className={classes.main}>
-          <Main />
-        </Grid>
-        <Grid item xs={12} sm={4} className={classes.desktop}>
-          <Details title="Income" />
-        </Grid>
-        <Grid item xs={12} sm={4} className={classes.last}>
+        </div>
+        <div className="details_div">
           <Details title="Expense" />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
+
       <div className="Loading_Spinner">
         <LoadingSpinner isLoading={loading} />
       </div>
