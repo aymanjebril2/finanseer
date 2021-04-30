@@ -8,5 +8,6 @@
 
 ## Important Links
 
+[Goals, scope and who's working on what]( https://docs.google.com/document/d/1OkjQ4ZeFT_L1KzGaKSAj_i6_NlKqmJmTRCTyzherAp4/edit)  
 
-[Goals, scope and who's working on what]( https://docs.google.com/document/d/1OkjQ4ZeFT_L1KzGaKSAj_i6_NlKqmJmTRCTyzherAp4/edit)
+[Board with work items](https://github.com/aymanjebril2/finanseer/projects/1)
