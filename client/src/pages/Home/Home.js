@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core";
 import Details from "../../components/Details/Details";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import "./Home.css";
+import Main from "../../components/Main/Main";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ const Home = () => {
           <Details title="Income" />
         </Grid>
         <Grid item xs={12} sm={3}>
-          main
+          <Main />
         </Grid>
 
         <Grid item xs={12} sm={4}>
