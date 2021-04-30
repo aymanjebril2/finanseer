@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "rgba(121,9,113,1)",
   },
   form: {
     width: "100%",
@@ -138,7 +138,7 @@ const Login = () => {
             </Grid>
             <Grid item>
               <Link
-                href="/singup"
+                href="/signup"
                 variant="body2"
                 style={{ color: "rgba(121,9,113,1)" }}
               >
