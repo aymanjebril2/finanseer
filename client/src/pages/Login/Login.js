@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from 'axios';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -70,6 +71,19 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginUser = async () => {
+    console.log('email:', email);
+    const res = await axios.get(`/api/signin/`, {
+      params: {
+        email,
+        password
+      }
+    })
+    console.log('res:', res)
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -90,6 +104,7 @@ const Login = () => {
               fullWidth
               id="email"
               label="Email Address"
+              onChange={(e) => setEmail(e.target.value)}
               name="email"
               autoComplete="email"
               autoFocus
@@ -101,6 +116,7 @@ const Login = () => {
               fullWidth
               name="password"
               label="Password"
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               id="password"
               autoComplete="current-password"
@@ -121,8 +137,8 @@ const Login = () => {
             fullWidth
             variant="contained"
             // color="rgba(121,9,113,1)"
-
             className={classes.submit}
+            onClick={loginUser}
           >
             Sign In
           </Button>
