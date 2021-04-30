@@ -10,7 +10,6 @@ import { deepOrange } from "@material-ui/core/colors";
 const useStyles = makeStyles((theme) =>
   createStyles({
     orange: {
-      color: theme.palette.getContrastText(deepOrange[500]),
       backgroundColor: "#691b99",
 
       height: 50,
