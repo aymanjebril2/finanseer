@@ -11,7 +11,8 @@
 2. Install the heroku cli
 3. Authenticate to your account
 4. Add the remote repository `heroku`
-5. on the latest `master` branch you want to deploy from, run `yarn deploy:heroku`
+5. On the latest `master` branch you want to deploy from, run `yarn deploy:heroku`
+6. View the deployed web app at https://finanseer.herokuapp.com
 
 ## Important Links
 

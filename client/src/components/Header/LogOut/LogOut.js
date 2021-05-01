@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./LogOut.css";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
+import backend from "../../../utils/backend";
 
 const LogOut = ({ setIsLog }) => {
   const [ user, setUser ] = useState(JSON.parse(localStorage.getItem("user-info")) || {});
@@ -12,7 +13,7 @@ const LogOut = ({ setIsLog }) => {
     setUser({});
     setIsLog(false);
 
-    // TODO logout API for cookies
+    backend.delete("/api/logout");
     history.push("/login");
   };
 
