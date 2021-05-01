@@ -5,9 +5,11 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "yarn install && cd server && yarn install && cd ../client && yarn install",
+    "build:client": "yarn build",
     "start:server": "cd server && npm start",
     "start:client": "cd client && npm start",
-    "start": "concurrently \"npm run start:client\" \"npm run start:server\""
+    "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
+    "start:heroku": "concurrently \"npm run build:client\" \"npm run start:server\""
   },
   "devDependencies": {
     "concurrently": "^6.0.2"
