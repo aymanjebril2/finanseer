@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import {
   TextField,
   Typography,
@@ -9,7 +9,6 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
-import { v4 as uuidv4 } from "uuid";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Snackbar from "../Snackbar/Snackbar";
 import formatDate from "../../../utils/formatDate";
@@ -18,6 +17,7 @@ import {
   incomeCategories,
   expenseCategories,
 } from "../../../constants/categories";
+import backend from "../../../utils/backend";
 import useStyles from "./styles";
 
 const theme = createMuiTheme({
@@ -32,7 +32,7 @@ const initialState = {
   amount: "",
   category: "",
   type: "Income",
-  date: formatDate(new Date()),
+  timestamp: new Date().getTime()
 };
 
 const Form = () => {
@@ -40,16 +40,14 @@ const Form = () => {
   const { addTransaction } = useContext(ExpenseTrackerContext);
   const [formData, setFormData] = useState(initialState);
   const [open, setOpen] = useState(false);
-  console.log("this datat", formData);
 
   const createTransaction = () => {
     if (
       formData.amount !== 0 &&
       formData.category !== "" &&
-      formData.type !== "" &&
-      formData.date !== ""
+      formData.type !== ""
     ) {
-      if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-"))
+      if (Number.isNaN(Number(formData.amount)))
         return;
 
       if (incomeCategories.map((iC) => iC.type).includes(formData.category)) {
@@ -61,11 +59,14 @@ const Form = () => {
       }
 
       setOpen(true);
-      addTransaction({
+
+      const itemData = {
         ...formData,
-        amount: Number(formData.amount),
-        id: uuidv4(),
-      });
+        amount: Number(formData.amount)
+      };
+
+      addTransaction(itemData);
+      backend.post(`/api/finance/${ formData.type }`, itemData);
       setFormData(initialState);
     }
   };
@@ -131,9 +132,9 @@ const Form = () => {
             fullWidth
             label="Date"
             type="date"
-            value={formData.date}
+            value={formatDate(formData.timestamp)}
             onChange={(e) =>
-              setFormData({ ...formData, date: formatDate(e.target.value) })
+              setFormData({ ...formData, timestamp: new Date(e.target.value).getTime() })
             }
           />
         </Grid>
