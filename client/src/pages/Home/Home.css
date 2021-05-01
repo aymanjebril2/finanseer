@@ -12,7 +12,6 @@
   flex-wrap: wrap;
   /* justify-content: start; */
   justify-content: space-evenly;
-  height: calc(100vh - 221px);
 }
 .main_div {
   width: 400px;
@@ -42,8 +41,20 @@
 }
 
 .themic_div {
+  display: none;
   margin-top: 50px;
   margin-left: 20px;
+}
+
+.themic_div.show {
+  display: inherit;
+}
+
+@media only screen and (min-width: 900px) {
+  .themic_div {
+    position: fixed;
+    bottom: 200px;
+  }
 }
 
 @media only screen and (max-width: 600px) {

@@ -21,9 +21,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "auto",
     // marginTop: theme.spacing(10),
     // marginBottom: -20000,
-
     backgroundColor: "rgba(121,9,113,1)",
     position: "sticky",
+    [theme.breakpoints.up(900)]: {
+      position: "fixed",
+      width: "100vw",
+      bottom: 0
+    }
   },
 }));
 
