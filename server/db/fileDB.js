@@ -47,7 +47,7 @@ function authenticateUser(email, password) {
     const rawData = fs.readFileSync(USERS_DB);
     const userTable = JSON.parse(rawData);
 
-    const userCandidate = Object.values(userTable).find(({ email: userEmail }) => email = userEmail);
+    const userCandidate = Object.values(userTable).find(({ email: userEmail }) => email === userEmail);
 
     if (!userCandidate) {
         throw new Error("user not found");

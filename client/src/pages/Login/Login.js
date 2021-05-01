@@ -89,7 +89,9 @@ const Login = () => {
     });
   
     if (!response.success) {
-      console.error("DO SOMETHING");
+      console.error("HANDLE ERROR STATE FOR LOGIN");
+
+      return;
     }
   
     storage.setAuthTokens(response.id, response.token, remember);

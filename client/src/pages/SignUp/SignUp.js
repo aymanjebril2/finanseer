@@ -80,12 +80,17 @@ const SignUp = () => {
   async function submit(event) {
     event.preventDefault();
   
-    await backend.post("/api/register", {
+    const response = await backend.post("/api/register", {
       email: signUpEmail,
       password: signUpPassword,
       firstName,
       lastName
     });
+
+    if (!response.success) {
+      console.error("HANDLE ERROR STATE FOR SIGNUP");
+      return;
+    }
   
     history.push("/login");
   }

@@ -43,6 +43,8 @@ const register = (request, response) => {
         response.status(400).json({ success: false, message: "invalid params" });
     }
 
+    console.log(request.body);
+
     db.addUser(request.body);
 
     response.status(200).json({ success: true });
