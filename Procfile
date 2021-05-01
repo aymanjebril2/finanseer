@@ -1,1 +1,1 @@
-web: yarn bootstrap && yarn start:heroku
+web: cd server && yarn install && yarn start
