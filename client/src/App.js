@@ -13,7 +13,7 @@ import Footer from "./components/Footer/Footer";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ForgotPasswordSuccess from "./pages/ForgotPassword/Success";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
-
+import Team from "./pages/Team/Team";
 
 function App() {
   const [isLog, setIsLog] = useState(false);
@@ -46,11 +46,16 @@ function App() {
         <Route exact path="/about">
           <About />
         </Route>
-
+        {/* <Route exact path="/team">
+          <Team />
+        </Route> */}
         <Route exact path="/forgot-password" component={ForgotPassword} />
-        <Route exact path="/forgot-password-success" component={ForgotPasswordSuccess} />
+        <Route
+          exact
+          path="/forgot-password-success"
+          component={ForgotPasswordSuccess}
+        />
         <Route exact path="/reset-password" component={ResetPassword} />
-
       </Switch>
       <Footer />
     </div>

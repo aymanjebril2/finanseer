@@ -19,7 +19,11 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     padding: theme.spacing(3, 2),
     marginTop: "auto",
+    // marginTop: theme.spacing(10),
+    // marginBottom: -20000,
+
     backgroundColor: "rgba(121,9,113,1)",
+    position: "sticky",
   },
 }));
 
@@ -27,7 +31,7 @@ const Footer = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div>
       {/* <AppBar
         style={{
           backgroundColor: "rgba(121,9,113,1)",
@@ -38,7 +42,6 @@ const Footer = () => {
         <Container maxWidth="sm">
           <div
             style={{
-              justifyContent: "space-between",
               overflow: "hidden",
             }}
           >
@@ -47,7 +50,9 @@ const Footer = () => {
                 style={{
                   listStyle: "none",
                   textDecoration: "none",
-                  marginRight: 20,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  allignItems: "center",
                 }}
               >
                 <li>
