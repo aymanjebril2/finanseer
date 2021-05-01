@@ -88,14 +88,23 @@ const resetPassword = (request, response) => {
     }
 };
 
+const logout = (request, response) => {
+    response.clearCookie(USER_ID_COOKIE_NAME);
+    response.clearCookie(USER_TOKEN_COOKIE_NAME);
+    response.status(200).send({ success: true });
+};
+
 export default () => {
     const router = Router();
 
     router.post('/signin', validate.email, validate.signInPassword, signin);
     router.post('/register', validate.email, validate.registrationPassword, validate.firstName, validate.lastName, register);
     router.post('/verify', requireUser, verify);
+    router.delete('/logout', logout);
     router.post('/forgot-password', validate.email, forgotPassword);
     router.post('/reset-password', validate.email, validate.registrationPassword, resetPassword);
+
+    router.use('*', (request, response) => response.status(404).json({ message: "invalid API route" }));
 
     return router;
 };

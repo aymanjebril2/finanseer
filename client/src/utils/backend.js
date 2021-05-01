@@ -1,6 +1,7 @@
 import storage from "./storage.js";
 
-const BACKEND_URL = "http://localhost:5000";
+// use http://localhost:5000 locally
+const BACKEND_URL = "https://finanseer.herokuapp.com";
 
 async function post(relativePath, requestBody = {}) {
     const response = await (await window.fetch(`${ BACKEND_URL }${ relativePath }`, {

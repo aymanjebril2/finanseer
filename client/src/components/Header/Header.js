@@ -48,10 +48,10 @@ const Header = ({ isLog, setIsLog }) => {
           { ["/login", "/signup", "/forgot-password"].includes(location.pathname) ? (
             <div>
               <p className="salutation">
-                <span className="primary"><span className="tertiary">Welcome to</span>Finanseer</span><span className="secondary">A simple yet powerful personal finance tool</span>
+                <span className="primary"><span className="tertiary">Welcome to</span>FinanSeer</span><span className="secondary">A simple yet powerful personal finance tool</span>
               </p>
             </div>) : <div>
-              <h1>FinanSeer: Track your stack</h1>
+              <h1>FinanSeer</h1>
             </div>
           }
           <div>

@@ -40,6 +40,11 @@
   margin-bottom: 40px;
 }
 
+.themic_div {
+  margin-top: 50px;
+  margin-left: 20px;
+}
+
 @media only screen and (max-width: 600px) {
   .main_details {
     display: flex;
@@ -53,3 +58,26 @@
     width: 300px;
   }
 }
+
+/* .BigTranscript {
+  color: red;
+  font-family: "Organetto";
+  font-size: 1.4rem;
+  line-height: 1.15;
+  margin-left: 20px;
+}
+
+.BigTranscript .Entity {
+  color: #909090;
+}
+
+.BigTranscript .Entity.room {
+  color: #1fd3f3;
+  align-items: center;
+}
+
+.BigTranscript .Entity.device {
+  color: #1fd3f3;
+  align-items: center;
+  justify-content: center;
+} */
