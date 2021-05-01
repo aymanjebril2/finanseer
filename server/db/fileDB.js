@@ -72,6 +72,47 @@ function authenticateUser(email, password) {
     };
 }
 
+function getUserByEmail(email) {
+    const rawData = fs.readFileSync(USERS_DB);
+    const userTable = JSON.parse(rawData);
+
+    const userCandidate = Object.values(userTable).find(({ email: userEmail }) => email === userEmail);
+
+    if (!userCandidate) {
+        throw new Error("user not found");
+    }
+
+    return userCandidate;
+}
+
+function resetUserPassword(email, password, token) {
+    const rawData = fs.readFileSync(USERS_DB);
+    const usersTable = JSON.parse(rawData);
+
+    const userCandidate = Object.values(userTable).find(({ email: userEmail }) => email === userEmail);
+
+    if (!userCandidate) {
+        throw new Error("user not found");
+    }
+
+    if (token !== userCandidate.salt) {
+        throw new Error("reset password token is invalid");
+    }
+
+    const salt = crypto.randomBytes(8).toString("hex");
+    const hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
+    hash.update(password);
+    const saltedPassword = hash.digest('hex');
+
+    usersTable[userCandidate.id] = {
+        ...userCandidate,
+        salt,
+        password: saltedPassword
+    };
+
+    fs.writeFileSync(USERS_DB, JSON.stringify(usersTable));
+}
+
 function addItem(userId, { name, value, timestamp, category }) {
     const rawData = fs.readFileSync(ITEMS_DB);
     const itemsTable = JSON.parse(rawData);
@@ -110,6 +151,8 @@ function getMonthlyItems(userId, month, year) {
 export default {
     addUser,
     authenticateUser,
+    getUserByEmail,
+    resetUserPassword,
     addItem,
     getMonthlyItems
 };
