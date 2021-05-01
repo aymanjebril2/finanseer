@@ -26,23 +26,6 @@ const theme = createMuiTheme({
   },
 });
 
-const Copyright = () => {
-  return (
-    <Typography
-      variant="body2"
-      color="textSecondary"
-      align="center"
-      style={{ color: "rgba(121,9,113,1)" }}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="" style={{ color: "rgba(121,9,113,1)" }}>
-        Finanseer
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
 const useStyles = makeStyles((theme) => ({
   root: {
     primary: "red",
@@ -176,9 +159,7 @@ const Login = ({ setIsLog }) => {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
+      <Box mt={8}></Box>
     </Container>
   );
 };

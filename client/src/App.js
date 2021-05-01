@@ -6,6 +6,8 @@ import Login from "./pages/Login/Login";
 import { Switch, Route, useHistory } from "react-router-dom";
 import Header from "./components/Header/Header";
 import storage from "./utils/storage.js";
+import About from "./pages/About/About";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [isLog, setIsLog] = useState(false);
@@ -31,7 +33,14 @@ function App() {
         <Route exact path="/login">
           <Login setIsLog={setIsLog} />
         </Route>
+        <Route exact path="/login">
+          <Login setIsLog={setIsLog} />
+        </Route>
+        <Route exact path="/about">
+          <About />
+        </Route>
       </Switch>
+      <Footer />
     </div>
   );
 }
