@@ -11,7 +11,11 @@ import Team from "./pages/Team/Team";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ForgotPasswordSuccess from "./pages/ForgotPassword/Success";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+
+import Team from "./pages/Team/Team";
+
 import storage from "./utils/storage";
+
 
 function App() {
   const [isLog, setIsLog] = useState(!!storage.getUserId());
@@ -30,12 +34,19 @@ function App() {
         <Route exact path="/login">
           <Login setIsLog={setIsLog} />
         </Route>
-        <Route exact path="/about" component={About} />
-        <Route exact path="/team" component={Team} />
-        <Route exact path="/forgot-password" component={ForgotPassword} />
-        <Route exact path="/forgot-password-success" component={ForgotPasswordSuccess} />
-        <Route exact path="/reset-password" component={ResetPassword} />
 
+        <Route exact path="/about" component={About} />
+        {/* <Route exact path="/team">
+          <Team />
+        </Route> */}
+
+        <Route exact path="/forgot-password" component={ForgotPassword} />
+        <Route
+          exact
+          path="/forgot-password-success"
+          component={ForgotPasswordSuccess}
+        />
+        <Route exact path="/reset-password" component={ResetPassword} />
       </Switch>
       <Footer />
     </div>
