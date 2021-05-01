@@ -97,5 +97,7 @@ export default () => {
     router.post('/forgot-password', validate.email, forgotPassword);
     router.post('/reset-password', validate.email, validate.registrationPassword, resetPassword);
 
+    router.use('*', (request, response) => response.status(404).json({ message: "invalid API route" }));
+
     return router;
 };
