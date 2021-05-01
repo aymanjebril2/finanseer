@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider, Tooltip, Collapse } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -59,6 +60,9 @@ const SignUp = () => {
   const [lastName, setLastName] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const [alert, revealAlert] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [termsAndConditions, agreeToTermsAndConditions] = useState(false);
 
   async function submit(event) {
     event.preventDefault();
@@ -71,7 +75,15 @@ const SignUp = () => {
     });
 
     if (!response.success) {
-      console.error("HANDLE ERROR STATE FOR SIGNUP");
+      setErrMsg(response.message)
+      revealAlert(!response.success);
+      return;
+    }
+
+    if (!termsAndConditions) {
+      console.log('here')
+      setErrMsg('Please agree to Terms & Conditions')
+      revealAlert(true)
       return;
     }
 
@@ -129,29 +141,38 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  onChange={(e) => setSignUpPassword(e.target.value)}
-                  autoComplete="current-password"
-                />
+                <Tooltip title="Passphrase must be 16 characters long" placement="left">
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Passphrase"
+                    type="password"
+                    id="password"
+                    onChange={(e) => setSignUpPassword(e.target.value)}
+                    autoComplete="current-password"
+                  />
+                </Tooltip>
               </Grid>
             </ThemeProvider>
-
+            <Grid container xs={12} justify="center">
+              <Grid item xs={9}>
+              <Collapse in={alert}>
+                <Alert severity="error">{errMsg}</Alert>
+              </Collapse>
+              </Grid>
+            </Grid>
             <Grid item xs={12}>
               <FormControlLabel
                 control={
                   <Checkbox
                     value="allowExtraEmails"
                     style={{ color: "rgba(121,9,113,1)" }}
-                  />
-                }
-                label="I Agree on Terms and Conditions agreement and  a Privacy Policy ."
+                    />
+                  }
+                onChange={(e) => agreeToTermsAndConditions(e.target.checked)}
+                label="I agree to the Terms & Conditions and Privacy Policy."
               />
             </Grid>
           </Grid>
@@ -164,7 +185,7 @@ const SignUp = () => {
           >
             Sign Up
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justify="space-around">
             <Grid item>
               <Link
                 href="/login"

@@ -6,8 +6,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -15,22 +13,37 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import storage from "../../utils/storage.js";
 import backend from "../../utils/backend.js";
-import "./Login.css";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
       main: "rgba(121,9,113,1)",
     },
+    secondary: {
+      main: "#0000FF",
+    },
   },
 });
 
+const Copyright = () => {
+  return (
+    <Typography
+      variant="body2"
+      style={{ color: "rgba(121,9,113,1)" }}
+      align="center"
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="">
+        Finanseer
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+};
+
 const useStyles = makeStyles((theme) => ({
-  root: {
-    primary: "red",
-  },
   paper: {
     marginTop: theme.spacing(18),
     display: "flex",
@@ -42,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(121,9,113,1)",
   },
   form: {
-    width: "100%",
-    marginTop: theme.spacing(1),
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -52,39 +65,30 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#6F396D",
     },
-  }
+  },
 }));
 
-const Login = ({ setIsLog }) => {
+const ForgotPassword = () => {
   const history = useHistory();
   const classes = useStyles();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [alert, revealAlert] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
   async function submit(event) {
     event.preventDefault();
-
-    const remember = !!document.getElementById("remember").checked;
-
-    const response = await backend.post("/api/signin", {
-      email,
-      password,
-      remember
+  
+    const response = await backend.post("/api/forgot-password", {
+      email
     });
 
     if (!response.success) {
-      setErrMsg(response.message)
-      revealAlert(!response.success);
-      return;
+        setErrMsg(response.message)
+        revealAlert(!response.success);
+        return;
     }
-
-    storage.setAuthTokens(response.id, response.token, remember);
-    storage.setUserInfo(response.email, response.firstName, response.lastName);
-
-    history.push("/");
-    setIsLog((log) => !log);
+  
+    history.push(`/forgot-password-success?email=${ email }&token=${ response.token }`);
   }
 
   return (
@@ -95,65 +99,46 @@ const Login = ({ setIsLog }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Forgot Password
         </Typography>
-        <form className={classes.form} noValidate onSubmit={ submit }>
-          <ThemeProvider theme={theme}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              onChange={(e) => {setEmail(e.target.value)}}
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Passphrase"
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-          </ThemeProvider>
-          <Collapse in={alert}>
-            <Alert severity="error">{errMsg}</Alert>
-          </Collapse>
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="remember"
-                style={{ color: "rgba(121,9,113,1)" }}
+        <form className={classes.form} onSubmit={ submit }>
+          <Grid container spacing={2}>
+            <ThemeProvider theme={theme}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
+                  autoFocus
                 />
-            }
-            label="Remember me"
-          />
-          {/* {primary} */}
+              </Grid>
+            </ThemeProvider>
+            <Collapse in={alert}>
+              <Alert severity="error">{errMsg}</Alert>
+            </Collapse>
+          </Grid>
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            // color="rgba(121,9,113,1)"
+            color="primary"
             className={classes.submit}
           >
-            Sign In
+            Submit
           </Button>
           <Grid container justify="space-between">
             <Grid item>
               <Link
-                href="/forgot-password"
+                href="/login"
                 variant="body2"
                 style={{ color: "rgba(121,9,113,1)" }}
               >
-                Forgot password?
+                Already have an account?
               </Link>
             </Grid>
             <Grid item>
@@ -162,15 +147,17 @@ const Login = ({ setIsLog }) => {
                 variant="body2"
                 style={{ color: "rgba(121,9,113,1)" }}
               >
-                {"Don't have an account? Sign Up"}
+                {"Don't have an account?"}
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={8}></Box>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
     </Container>
   );
 };
 
-export default Login;
+export default ForgotPassword;
