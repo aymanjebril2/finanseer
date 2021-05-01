@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createMuiTheme, ThemeProvider, Tooltip } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider, Tooltip, Collapse } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -26,23 +27,6 @@ const theme = createMuiTheme({
     },
   },
 });
-
-const Copyright = () => {
-  return (
-    <Typography
-      variant="body2"
-      style={{ color: "rgba(121,9,113,1)" }}
-      align="center"
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="">
-        Finanseer
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,6 +60,9 @@ const SignUp = () => {
   const [lastName, setLastName] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const [alert, revealAlert] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [termsAndConditions, agreeToTermsAndConditions] = useState(false);
 
   async function submit(event) {
     event.preventDefault();
@@ -84,11 +71,19 @@ const SignUp = () => {
       email: signUpEmail,
       password: signUpPassword,
       firstName,
-      lastName
+      lastName,
     });
 
     if (!response.success) {
-      console.error("HANDLE ERROR STATE FOR SIGNUP");
+      setErrMsg(response.message)
+      revealAlert(!response.success);
+      return;
+    }
+
+    if (!termsAndConditions) {
+      console.log('here')
+      setErrMsg('Please agree to Terms & Conditions')
+      revealAlert(true)
       return;
     }
 
@@ -105,7 +100,7 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} onSubmit={ submit }>
+        <form className={classes.form} onSubmit={submit}>
           <Grid container spacing={2}>
             <ThemeProvider theme={theme}>
               <Grid item xs={12} sm={6}>
@@ -146,13 +141,13 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Tooltip title="Password must be 16 characters long" placement="left">
+                <Tooltip title="Passphrase must be 16 characters long" placement="left">
                   <TextField
                     variant="outlined"
                     required
                     fullWidth
                     name="password"
-                    label="Password"
+                    label="Passphrase"
                     type="password"
                     id="password"
                     onChange={(e) => setSignUpPassword(e.target.value)}
@@ -161,16 +156,23 @@ const SignUp = () => {
                 </Tooltip>
               </Grid>
             </ThemeProvider>
-
+            <Grid container xs={12} justify="center">
+              <Grid item xs={9}>
+              <Collapse in={alert}>
+                <Alert severity="error">{errMsg}</Alert>
+              </Collapse>
+              </Grid>
+            </Grid>
             <Grid item xs={12}>
               <FormControlLabel
                 control={
                   <Checkbox
                     value="allowExtraEmails"
                     style={{ color: "rgba(121,9,113,1)" }}
-                  />
-                }
-                label="I Agree on Terms and Conditions agreement and  a Privacy Policy ."
+                    />
+                  }
+                onChange={(e) => agreeToTermsAndConditions(e.target.checked)}
+                label="I agree to the Terms & Conditions and Privacy Policy."
               />
             </Grid>
           </Grid>
@@ -183,7 +185,7 @@ const SignUp = () => {
           >
             Sign Up
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justify="space-around">
             <Grid item>
               <Link
                 href="/login"
@@ -196,9 +198,7 @@ const SignUp = () => {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+      <Box mt={5}></Box>
     </Container>
   );
 };

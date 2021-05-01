@@ -55,9 +55,11 @@ const forgotPassword = (request, response) => {
         email
     } = request.body;
 
+    let token = crypto.randomBytes(8).toString("hex");
+
     try {
         //TODO: email the user with a link to reset password page with some sort of key
-        const { salt: token } = db.getUserByEmail(email);
+        token = db.getUserByEmail(email).salt;
         // sendEmail(email, token);
 
         console.info("Reset password token", token);
@@ -65,7 +67,7 @@ const forgotPassword = (request, response) => {
         // We don't return the error to the user as that indicates an account does not exist
     }
 
-    response.status(200).json({ success: true });
+    response.status(200).json({ success: true, token });
 };
 
 const resetPassword = (request, response) => {
@@ -86,14 +88,23 @@ const resetPassword = (request, response) => {
     }
 };
 
+const logout = (request, response) => {
+    response.clearCookie(USER_ID_COOKIE_NAME);
+    response.clearCookie(USER_TOKEN_COOKIE_NAME);
+    response.status(200).send({ success: true });
+};
+
 export default () => {
     const router = Router();
 
     router.post('/signin', validate.email, validate.signInPassword, signin);
     router.post('/register', validate.email, validate.registrationPassword, validate.firstName, validate.lastName, register);
     router.post('/verify', requireUser, verify);
+    router.delete('/logout', logout);
     router.post('/forgot-password', validate.email, forgotPassword);
     router.post('/reset-password', validate.email, validate.registrationPassword, resetPassword);
+
+    router.use('*', (request, response) => response.status(404).json({ message: "invalid API route" }));
 
     return router;
 };

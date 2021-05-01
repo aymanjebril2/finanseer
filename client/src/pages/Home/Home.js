@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Grid } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
 import Details from "../../components/Details/Details";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import "./Home.css";
-import useStyles from "./styles";
 import Main from "../../components/Main/Main";
 import { Total } from "../../components/Total/Total";
 import { SpeechState, useSpeechContext } from "@speechly/react-client";
@@ -13,10 +11,12 @@ import {
 } from "@speechly/react-ui";
 
 const Home = () => {
+
   const { speechState } = useSpeechContext();
   const classes = useStyles();
   const main = useRef(null);
   const executeScroll = () => main.current.scrollIntoView();
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
