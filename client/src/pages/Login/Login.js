@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Collapse, createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Login = () => {
+const Login = ({ setIsLog }) => {
   const history = useHistory();
   const classes = useStyles();
   const [email, setEmail] = useState("");
@@ -101,6 +101,7 @@ const Login = () => {
     storage.setUserInfo(response.email, response.firstName, response.lastName);
 
     history.push("/");
+    setIsLog((log) => !log);
   }
 
   return (
@@ -148,7 +149,7 @@ const Login = () => {
               <Checkbox
                 id="remember"
                 style={{ color: "rgba(121,9,113,1)" }}
-              />
+                />
             }
             label="Remember me"
           />

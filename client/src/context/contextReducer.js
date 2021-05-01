@@ -16,6 +16,14 @@ const contextReducer = (state, action) => {
       localStorage.setItem("transactions", JSON.stringify(transactions));
 
       return transactions;
+    case "SET_TRANSACTIONS":
+      if (!action.payload) {
+        return state;
+      }
+
+      localStorage.setItem("transactions", JSON.stringify(action.payload));
+
+      return action.payload;
     default:
       return state;
   }

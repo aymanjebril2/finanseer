@@ -8,8 +8,8 @@ const requireUser = (request, response, next) => {
     } = request.cookies;
 
     const {
-        "X-User-Id": userIdHeader,
-        "X-User-Token": userTokenHeader
+        "x-user-id": userIdHeader,
+        "x-user-token": userTokenHeader
     } = request.headers;
 
     const userId = userIdCookie || userIdHeader;
@@ -32,6 +32,8 @@ const requireUser = (request, response, next) => {
 
         return;
     }
+
+    request.userId = userId;
 
     next();
 };

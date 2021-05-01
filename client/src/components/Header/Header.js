@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -7,6 +7,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { deepOrange } from "@material-ui/core/colors";
+import storage from "../../utils/storage.js";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -20,8 +21,9 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const Header = () => {
+const Header = ({ isLog }) => {
   const classes = useStyles();
+  const user = JSON.parse(localStorage.getItem("user-info"));
 
   return (
     <div>
@@ -34,9 +36,13 @@ const Header = () => {
           </div>
 
           <div>
-            <Avatar alt="" src="" className={classes.orange}>
-              A
-            </Avatar>
+            {isLog ? (
+              <Avatar alt="" src="" className={classes.orange}>
+                {user?.firstName?.charAt(0)}
+              </Avatar>
+            ) : (
+              ""
+            )}
           </div>
         </Toolbar>
       </AppBar>
