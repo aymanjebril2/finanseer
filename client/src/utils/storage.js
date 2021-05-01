@@ -1,5 +1,5 @@
 function setAuthTokens(userId, userToken, remember = false) {
-    localStorage.setItem("user-id", JSON.stringify({ value: userId, remember }));
+    localStorage.setItem("user-id", JSON.stringify({ value: userId, remember, timestamp: new Date().getTime() }));
     localStorage.setItem("user-token", userToken);
 }
 
@@ -17,9 +17,12 @@ function checkForLoggedInUser() {
         return;
     }
 
-    const { remember } = JSON.parse(storedId);
+    const { remember, timestamp } = JSON.parse(storedId);
 
-    if (!remember) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    if (!remember && timestamp < yesterday.getTime()) {
         localStorage.removeItem("user-id");
         localStorage.removeItem("user-token");
         localStorage.removeItem("user-info");
