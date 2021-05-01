@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { Collapse, createMuiTheme, ThemeProvider } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#6F396D",
     },
-  },
+  }
 }));
 
 const Login = () => {
@@ -76,24 +77,26 @@ const Login = () => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [alert, revealAlert] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
   async function submit(event) {
     event.preventDefault();
-  
+
     const remember = !!document.getElementById("remember").checked;
-  
+
     const response = await backend.post("/api/signin", {
       email,
       password,
       remember
     });
-  
-    if (!response.success) {
-      console.error("HANDLE ERROR STATE FOR LOGIN");
 
+    if (!response.success) {
+      setErrMsg(response.message)
+      revealAlert(!response.success);
       return;
     }
-  
+
     storage.setAuthTokens(response.id, response.token, remember);
     storage.setUserInfo(response.email, response.firstName, response.lastName);
 
@@ -119,7 +122,7 @@ const Login = () => {
               fullWidth
               id="email"
               label="Email Address"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {setEmail(e.target.value)}}
               name="email"
               autoComplete="email"
               autoFocus
@@ -137,6 +140,9 @@ const Login = () => {
               autoComplete="current-password"
             />
           </ThemeProvider>
+          <Collapse in={alert}>
+            <Alert severity="error">{errMsg}</Alert>
+          </Collapse>
           <FormControlLabel
             control={
               <Checkbox
