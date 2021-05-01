@@ -14,6 +14,8 @@ const port = process.env.PORT || 5000;
 app.use("/", express.static(path.resolve("../client/build")));
 app.use("/signup", express.static(path.resolve("../client/build")));
 app.use("/login", express.static(path.resolve("../client/build")));
+app.use("/about", express.static(path.resolve("../client/build")));
+app.use("/team", express.static(path.resolve("../client/build")));
 app.use("/forgot-password", express.static(path.resolve("../client/build")));
 app.use("/forgot-password-success", express.static(path.resolve("../client/build")));
 app.use("/reset-password", express.static(path.resolve("../client/build")));

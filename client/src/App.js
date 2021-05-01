@@ -6,10 +6,9 @@ import Login from "./pages/Login/Login";
 import { Switch, Route, useHistory } from "react-router-dom";
 import Header from "./components/Header/Header";
 import storage from "./utils/storage.js";
-
 import About from "./pages/About/About";
 import Footer from "./components/Footer/Footer";
-
+import Team from "./pages/Team/Team";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ForgotPasswordSuccess from "./pages/ForgotPassword/Success";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
@@ -39,14 +38,8 @@ function App() {
         <Route exact path="/login">
           <Login setIsLog={setIsLog} />
         </Route>
-
-        <Route exact path="/login">
-          <Login setIsLog={setIsLog} />
-        </Route>
-        <Route exact path="/about">
-          <About />
-        </Route>
-
+        <Route exact path="/about" component={About} />
+        <Route exact path="/team" component={Team} />
         <Route exact path="/forgot-password" component={ForgotPassword} />
         <Route exact path="/forgot-password-success" component={ForgotPasswordSuccess} />
         <Route exact path="/reset-password" component={ResetPassword} />
