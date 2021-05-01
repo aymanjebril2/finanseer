@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const Header = ({ isLog }) => {
+const Header = ({ isLog, setIsLog }) => {
   const location = useLocation();
   const [openLogOut, setOpenLogOut] = useState(false);
   const classes = useStyles();
@@ -62,7 +62,7 @@ const Header = ({ isLog }) => {
           </div>
         </Toolbar>
       </AppBar>
-      {openLogOut ? <LogOut /> : ""}
+      {openLogOut ? <LogOut setIsLog={ setIsLog } /> : ""}
     </div>
   );
 };
