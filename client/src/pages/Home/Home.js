@@ -1,14 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Grid } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
 import Details from "../../components/Details/Details";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import "./Home.css";
-import useStyles from "./styles";
 import Main from "../../components/Main/Main";
 
 const Home = () => {
-  const classes = useStyles();
-  const main = useRef(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

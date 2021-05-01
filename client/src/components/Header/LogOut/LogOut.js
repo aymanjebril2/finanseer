@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./LogOut.css";
 import Button from "@material-ui/core/Button";
-import { useHistory, Link } from "react-router-dom";
 
 const LogOut = () => {
   const user = JSON.parse(localStorage.getItem("user-info"));
