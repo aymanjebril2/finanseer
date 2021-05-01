@@ -8,7 +8,9 @@ import authenticate from "./api/authentication.js";
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(express.static(path.resolve("../client/build")));
+app.use("/", express.static(path.resolve("../client/build")));
+
+console.log(path.resolve("../client/build"));
 
 function removePortIfDev(url) {
     const portRegex = /:[0-9]*$/;
