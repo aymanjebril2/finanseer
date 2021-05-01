@@ -45,7 +45,9 @@ const Header = ({ isLog, setIsLog }) => {
               <p className="salutation">
                 <span className="primary"><span className="tertiary">Welcome to</span>Finanseer</span><span className="secondary">A simple yet powerful personal finance tool</span>
               </p>
-            </div>) : null
+            </div>) : <div>
+              <h1>FinanSeer: Track your stack</h1>
+            </div>
           }
           <div>
             {isLog ? (
