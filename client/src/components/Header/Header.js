@@ -51,7 +51,7 @@ const Header = ({ isLog, setIsLog }) => {
                 <span className="primary"><span className="tertiary">Welcome to</span>FinanSeer</span><span className="secondary">A simple yet powerful personal finance tool</span>
               </p>
             </div>) : <div>
-              <h1>FinanSeer: Track your stack</h1>
+              <h1>FinanSeer</h1>
             </div>
           }
           <div>
