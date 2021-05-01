@@ -80,7 +80,7 @@ const ResetPassword = () => {
 
   async function submit(event) {
     event.preventDefault();
-  
+
     const response = await backend.post("/api/reset-password", {
       email,
       password,
@@ -92,7 +92,7 @@ const ResetPassword = () => {
         revealAlert(!response.success);
         return;
     }
-  
+
     history.push("/login");
   }
 
@@ -122,17 +122,19 @@ const ResetPassword = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                />
+                <Tooltip title="Passphrase must be 16 characters long" placement="left">
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                  />
+                </Tooltip>
               </Grid>
             </ThemeProvider>
             <Collapse in={alert}>
