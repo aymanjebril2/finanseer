@@ -31,9 +31,6 @@ const Main = () => {
     <ThemeProvider theme={theme}>
       <Card className={classes.root} raised={true} >
         <CardContent>
-          <Typography align="center" variant="h3">
-            Total Balance: ${balance}
-          </Typography>
           <Typography
             variant="subtitle1"
             style={{ lineHeight: "1.5em", marginTop: "20px" }}
