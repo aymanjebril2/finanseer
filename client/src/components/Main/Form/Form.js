@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import {
   TextField,
-  Typography,
   Grid,
   Button,
   FormControl,
@@ -77,14 +76,8 @@ const Form = () => {
   return (
     <Grid container spacing={2}>
       <Snackbar open={open} setOpen={setOpen} />
-      <Grid item xs={12}>
-        <Typography align="center" variant="subtitle2" gutterBottom>
-          {" "}
-          some words{" "}
-        </Typography>
-      </Grid>
       <ThemeProvider theme={theme}>
-        <Grid item xs={6}>
+        <Grid item xs={6} className={classes.input}>
           <FormControl fullWidth>
             <InputLabel>Type</InputLabel>
             <Select
@@ -116,7 +109,7 @@ const Form = () => {
           </FormControl>
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={6} className={classes.input}>
           <TextField
             type="number"
             label="Amount"

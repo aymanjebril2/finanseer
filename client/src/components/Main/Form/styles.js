@@ -9,4 +9,7 @@ export default makeStyles(() => ({
   button: {
     marginTop: "20px",
   },
+  input: {
+    paddingRight: "20px"
+  }
 }));

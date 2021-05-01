@@ -6,7 +6,7 @@ export const Total = () => {
   const { balance } = useContext(ExpenseTrackerContext);
   return (
     <div>
-      <Card>
+      <Card raised="true">
         <h1>Total Balance :{balance}</h1>
       </Card>
     </div>
