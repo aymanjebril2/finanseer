@@ -40,26 +40,34 @@ const Form = () => {
   const { addTransaction } = useContext(ExpenseTrackerContext);
   const [formData, setFormData] = useState(initialState);
   const [open, setOpen] = useState(false);
+  console.log("this datat", formData.amount);
 
   const createTransaction = () => {
-    if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-"))
-      return;
-
-    if (incomeCategories.map((iC) => iC.type).includes(formData.category)) {
-      setFormData({ ...formData, type: "Income" });
-    } else if (
-      expenseCategories.map((iC) => iC.type).includes(formData.category)
+    if (
+      formData.amount !== 0 &&
+      formData.category !== "" &&
+      formData.type !== "" &&
+      formData.date !== ""
     ) {
-      setFormData({ ...formData, type: "Expense" });
-    }
+      if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-"))
+        return;
 
-    setOpen(true);
-    addTransaction({
-      ...formData,
-      amount: Number(formData.amount),
-      id: uuidv4(),
-    });
-    setFormData(initialState);
+      if (incomeCategories.map((iC) => iC.type).includes(formData.category)) {
+        setFormData({ ...formData, type: "Income" });
+      } else if (
+        expenseCategories.map((iC) => iC.type).includes(formData.category)
+      ) {
+        setFormData({ ...formData, type: "Expense" });
+      }
+
+      setOpen(true);
+      addTransaction({
+        ...formData,
+        amount: Number(formData.amount),
+        id: uuidv4(),
+      });
+      setFormData(initialState);
+    }
   };
 
   const selectedCategories =
