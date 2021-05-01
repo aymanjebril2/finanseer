@@ -3,6 +3,7 @@ import crypto from "crypto";
 import db from "../db/fileDB.js";
 import { USER_ID_COOKIE_NAME, USER_TOKEN_COOKIE_NAME } from "../constants/cookies.js";
 import requireUser from "../middleware/requireUser.js";
+import validate from "../middleware/validation.js";
 
 const signin = (request, response) => {
     const {
@@ -10,10 +11,6 @@ const signin = (request, response) => {
         password,
         remember
     } = request.body;
-
-    if (!email || !password) {
-        response.status(400).json({ success: false, message: "Missing email or password" });
-    }
 
     try {
         const user = db.authenticateUser(email, password);
@@ -53,12 +50,50 @@ const verify = (request, response) => {
     response.status(200).json({ success: true });
 };
 
+const forgotPassword = (request, response) => {
+    const {
+        email
+    } = request.body;
+
+    try {
+        //TODO: email the user with a link to reset password page with some sort of key
+        const { salt: token } = db.getUserByEmail(email);
+        // sendEmail(email, token);
+
+        console.info("Reset password token", token);
+    } catch (error) {
+        // We don't return the error to the user as that indicates an account does not exist
+    }
+
+    response.status(200).json({ success: true });
+};
+
+const resetPassword = (request, response) => {
+    const {
+        email,
+        password,
+        token
+    } = request.body;
+
+    try {
+        db.resetUserPassword(email, password, token);
+
+        response.status(200).json({ success: true });
+    } catch (error) {
+        console.error(error);
+
+        response.status(400).json({ success: false, message: error.message });
+    }
+};
+
 export default () => {
     const router = Router();
 
-    router.post('/signin', signin);
+    router.post('/signin', validate.email, validate.signInPassword, signin);
+    router.post('/register', validate.email, validate.registrationPassword, validate.firstName, validate.lastName, register);
     router.post('/verify', requireUser, verify);
-    router.post('/register', register);
+    router.post('/forgot-password', validate.email, forgotPassword);
+    router.post('/reset-password', validate.email, validate.registrationPassword, resetPassword);
 
     return router;
 };
