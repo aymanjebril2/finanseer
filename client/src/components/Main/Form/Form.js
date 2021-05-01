@@ -8,7 +8,8 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider, Collapse } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import Snackbar from "../Snackbar/Snackbar";
 import formatDate from "../../../utils/formatDate";
 import { ExpenseTrackerContext } from "../../../context/context";
@@ -39,6 +40,8 @@ const Form = () => {
   const { addTransaction } = useContext(ExpenseTrackerContext);
   const [formData, setFormData] = useState(initialState);
   const [open, setOpen] = useState(false);
+  const [alert, revealAlert] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
   const createTransaction = () => {
     if (
@@ -46,8 +49,16 @@ const Form = () => {
       formData.category !== "" &&
       formData.type !== ""
     ) {
-      if (Number.isNaN(Number(formData.amount)) || formData.amount < 0)
+      if (Number.isNaN(Number(formData.amount))) {
+        setErrMsg("Input must be number");
+        revealAlert(true);
         return;
+      } else if (formData.amount < 0) {
+        setErrMsg("Input cannot be negative");
+        revealAlert(true);
+        return;
+      }
+      revealAlert(false);
 
       if (incomeCategories.map((iC) => iC.type).includes(formData.category)) {
         setFormData({ ...formData, type: "Income" });
@@ -74,7 +85,7 @@ const Form = () => {
     formData.type === "Income" ? incomeCategories : expenseCategories;
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} className={classes.form}>
       <Snackbar open={open} setOpen={setOpen} />
       <ThemeProvider theme={theme}>
         <Grid item xs={6} className={classes.input}>
@@ -131,6 +142,9 @@ const Form = () => {
             }
           />
         </Grid>
+        <Collapse in={alert} className={classes.negAlert}>
+          <Alert severity="warning" >{errMsg}</Alert>
+        </Collapse>
         <Button
           className={classes.button}
           variant="outlined"

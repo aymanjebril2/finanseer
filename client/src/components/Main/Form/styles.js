@@ -1,6 +1,10 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles(() => ({
+  form: {
+    display: "flex",
+    justifyContent: "center"
+  },
   radioGroup: {
     display: "flex",
     justifyContent: "center",
@@ -11,5 +15,8 @@ export default makeStyles(() => ({
   },
   input: {
     paddingRight: "20px"
+  },
+  negAlert: {
+    marginTop: "10px"
   }
 }));
