@@ -22,4 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-db/__mock__/*
+db/__mock__/items.json
+db/__mock__/users.json
