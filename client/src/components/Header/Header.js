@@ -6,6 +6,8 @@ import logo from "./img/crystal-ball.png";
 import Avatar from "@material-ui/core/Avatar";
 import { Link } from "react-router-dom";
 import "./Header.css";
+import IconButton from "@material-ui/core/IconButton";
+import LogOut from "./LogOut/LogOut";
 import { deepOrange } from "@material-ui/core/colors";
 import storage from "../../utils/storage.js";
 
@@ -22,8 +24,12 @@ const useStyles = makeStyles((theme) =>
 );
 
 const Header = ({ isLog }) => {
+  const [openLogOut, setOpenLogOut] = useState(false);
   const classes = useStyles();
   const user = JSON.parse(localStorage.getItem("user-info"));
+  const handleLogout = () => {
+    setOpenLogOut((open) => !open);
+  };
 
   return (
     <div>
@@ -37,15 +43,18 @@ const Header = ({ isLog }) => {
 
           <div>
             {isLog ? (
-              <Avatar alt="" src="" className={classes.orange}>
-                {user?.firstName?.charAt(0)}
-              </Avatar>
+              <IconButton onClick={handleLogout}>
+                <Avatar alt="" src="" className={classes.orange}>
+                  {user?.firstName?.charAt(0)}
+                </Avatar>
+              </IconButton>
             ) : (
               ""
             )}
           </div>
         </Toolbar>
       </AppBar>
+      {openLogOut ? <LogOut /> : ""}
     </div>
   );
 };
