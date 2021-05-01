@@ -11,11 +11,12 @@ const port = process.env.PORT || 5000;
 
 app.use("/", express.static(path.resolve("../client/build")));
 
-fs.readdir(path.resolve("../client/build"), (err, files) => {
-    files.forEach(file => {
-      console.log(file);
-    });
-  });
+// client-side routes
+app.use("/signup", express.static(path.resolve("../client/build")));
+app.use("/login", express.static(path.resolve("../client/build")));
+app.use("/forgot-password", express.static(path.resolve("../client/build")));
+app.use("/forgot-password-success", express.static(path.resolve("../client/build")));
+app.use("/reset-password", express.static(path.resolve("../client/build")));
 
 function removePortIfDev(url) {
     const portRegex = /:[0-9]*$/;
