@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import Details from "../../components/Details/Details";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import "./Home.css";
@@ -9,11 +10,11 @@ import {
   PushToTalkButton,
   PushToTalkButtonContainer,
 } from "@speechly/react-ui";
+import storage from "../../utils/storage";
 
 const Home = () => {
-
+  const history = useHistory();
   const { speechState } = useSpeechContext();
-  const classes = useStyles();
   const main = useRef(null);
   const executeScroll = () => main.current.scrollIntoView();
 
@@ -26,10 +27,19 @@ const Home = () => {
   }, [speechState]);
 
   useEffect(() => {
+    const userId = storage.getUserId();
+
+    if (!userId && window.location.pathname === "/") {
+      history.push("/login");
+    }
+  }, [history]);
+
+  useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
   }, []);
+
   return (
     <>
       <div className="root_div_home">
