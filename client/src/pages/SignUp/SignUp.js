@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider, Tooltip } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -79,7 +79,7 @@ const SignUp = () => {
 
   async function submit(event) {
     event.preventDefault();
-  
+
     const response = await backend.post("/api/register", {
       email: signUpEmail,
       password: signUpPassword,
@@ -91,7 +91,7 @@ const SignUp = () => {
       console.error("HANDLE ERROR STATE FOR SIGNUP");
       return;
     }
-  
+
     history.push("/login");
   }
 
@@ -146,17 +146,19 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  onChange={(e) => setSignUpPassword(e.target.value)}
-                  autoComplete="current-password"
-                />
+                <Tooltip title="Password must be 16 characters long" placement="left">
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    onChange={(e) => setSignUpPassword(e.target.value)}
+                    autoComplete="current-password"
+                  />
+                </Tooltip>
               </Grid>
             </ThemeProvider>
 
