@@ -44,7 +44,7 @@ app.use(cors({
         */
         const originToCheck = removePortIfDev(!origin || origin === "null" ? "" : origin);
         const allowlist = [
-            ...(process.env.NODE_ENV !== "production" ? [ "http://localhost" ] : []),
+            "http://localhost", //...(process.env.NODE_ENV !== "production" ? [ "http://localhost" ] : []),
             "https://finanseer.herokuapp.com"
         ];
 

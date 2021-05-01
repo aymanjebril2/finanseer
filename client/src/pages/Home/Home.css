@@ -12,6 +12,7 @@
   flex-wrap: wrap;
   /* justify-content: start; */
   justify-content: space-evenly;
+  height: calc(100vh - 221px);
 }
 .main_div {
   width: 400px;

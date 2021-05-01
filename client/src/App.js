@@ -7,13 +7,10 @@ import { Switch, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import About from "./pages/About/About";
 import Footer from "./components/Footer/Footer";
-import Team from "./pages/Team/Team";
+//import Team from "./pages/Team/Team";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ForgotPasswordSuccess from "./pages/ForgotPassword/Success";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
-
-import Team from "./pages/Team/Team";
-
 import storage from "./utils/storage";
 
 
