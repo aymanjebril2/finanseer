@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
@@ -21,7 +22,8 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const Header = ({ isLog }) => {
+const Header = ({ isLog, setIsLog }) => {
+  const location = useLocation();
   const [openLogOut, setOpenLogOut] = useState(false);
   const classes = useStyles();
   const user = JSON.parse(localStorage.getItem("user-info"));
@@ -32,13 +34,19 @@ const Header = ({ isLog }) => {
   return (
     <div>
       <AppBar style={{ backgroundColor: "rgba(121,9,113,1)" }}>
-        <Toolbar>
+        <Toolbar style={{ display: "flex", flex: "1 1", justifyContent: "space-between" }}>
           <div className="logo_div">
             <Link to="/">
               <img src={logo} alt="fainaseer logo" className="logo_img" />
             </Link>
           </div>
-
+          { ["/login", "/signup", "/forgot-password"].includes(location.pathname) ? (
+            <div>
+              <p className="salutation">
+                <span className="primary"><span className="tertiary">Welcome to</span>Finanseer</span><span className="secondary">A simple yet powerful personal finance tool</span>
+              </p>
+            </div>) : null
+          }
           <div>
             {isLog ? (
               <IconButton onClick={handleLogout}>
@@ -52,7 +60,7 @@ const Header = ({ isLog }) => {
           </div>
         </Toolbar>
       </AppBar>
-      {openLogOut ? <LogOut /> : ""}
+      {openLogOut ? <LogOut setIsLog={ setIsLog } /> : ""}
     </div>
   );
 };

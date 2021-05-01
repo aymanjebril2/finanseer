@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createMuiTheme, ThemeProvider, Tooltip, Collapse } from "@material-ui/core";
+import { Collapse, createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -70,41 +68,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = () => {
+const ForgotPassword = () => {
   const history = useHistory();
   const classes = useStyles();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [signUpEmail, setSignUpEmail] = useState("");
-  const [signUpPassword, setSignUpPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [alert, revealAlert] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [termsAndConditions, agreeToTermsAndConditions] = useState(false);
 
   async function submit(event) {
     event.preventDefault();
-
-    const response = await backend.post("/api/register", {
-      email: signUpEmail,
-      password: signUpPassword,
-      firstName,
-      lastName
+  
+    const response = await backend.post("/api/forgot-password", {
+      email
     });
 
     if (!response.success) {
-      setErrMsg(response.message)
-      revealAlert(!response.success);
-      return;
+        setErrMsg(response.message)
+        revealAlert(!response.success);
+        return;
     }
-
-    if (!termsAndConditions) {
-      console.log('here')
-      setErrMsg('Please agree to Terms & Conditions')
-      revealAlert(true)
-      return;
-    }
-
-    history.push("/login");
+  
+    history.push(`/forgot-password-success?email=${ email }&token=${ response.token }`);
   }
 
   return (
@@ -115,36 +99,11 @@ const SignUp = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Forgot Password
         </Typography>
         <form className={classes.form} onSubmit={ submit }>
           <Grid container spacing={2}>
             <ThemeProvider theme={theme}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="firstName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  onChange={(e) => setFirstName(e.target.value)}
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  onChange={(e) => setLastName(e.target.value)}
-                  autoComplete="lname"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -153,45 +112,15 @@ const SignUp = () => {
                   id="email"
                   label="Email Address"
                   name="email"
-                  onChange={(e) => setSignUpEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
+                  autoFocus
                 />
               </Grid>
-              <Grid item xs={12}>
-                <Tooltip title="Password must be 16 characters long" placement="left">
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    onChange={(e) => setSignUpPassword(e.target.value)}
-                    autoComplete="current-password"
-                  />
-                </Tooltip>
-              </Grid>
             </ThemeProvider>
-            <Grid container xs={12} justify="center">
-              <Grid item xs={9}>
-              <Collapse in={alert}>
-                <Alert severity="error">{errMsg}</Alert>
-              </Collapse>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="allowExtraEmails"
-                    style={{ color: "rgba(121,9,113,1)" }}
-                    />
-                  }
-                onChange={(e) => agreeToTermsAndConditions(e.target.checked)}
-                label="I agree to the Terms & Conditions and Privacy Policy."
-              />
-            </Grid>
+            <Collapse in={alert}>
+              <Alert severity="error">{errMsg}</Alert>
+            </Collapse>
           </Grid>
           <Button
             type="submit"
@@ -200,16 +129,25 @@ const SignUp = () => {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Submit
           </Button>
-          <Grid container justify="space-around">
+          <Grid container justify="space-between">
             <Grid item>
               <Link
                 href="/login"
                 variant="body2"
                 style={{ color: "rgba(121,9,113,1)" }}
               >
-                Already have an account? Sign in
+                Already have an account?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link
+                href="/signup"
+                variant="body2"
+                style={{ color: "rgba(121,9,113,1)" }}
+              >
+                {"Don't have an account?"}
               </Link>
             </Grid>
           </Grid>
@@ -222,4 +160,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default ForgotPassword;

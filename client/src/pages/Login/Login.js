@@ -163,10 +163,10 @@ const Login = ({ setIsLog }) => {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
+          <Grid container justify="space-between">
+            <Grid item>
               <Link
-                href="#"
+                href="/forgot-password"
                 variant="body2"
                 style={{ color: "rgba(121,9,113,1)" }}
               >
