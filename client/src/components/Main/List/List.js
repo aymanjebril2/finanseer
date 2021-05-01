@@ -17,6 +17,7 @@ import useStyles from "./styles";
 const List = () => {
   const classes = useStyles();
   const { transactions, deleteTransaction } = useContext(ExpenseTrackerContext);
+  console.log(transactions); //// this also got to datatbase
   return (
     <MUIList dense={false} className={classes.list}>
       {transactions.map((transaction) => (
