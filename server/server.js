@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
+import fs from "fs";
 import finance from "./api/finance.js";
 import authenticate from "./api/authentication.js";
 
@@ -10,7 +11,11 @@ const port = process.env.PORT || 5000;
 
 app.use("/", express.static(path.resolve("../client/build")));
 
-console.log(path.resolve("../client/build"));
+fs.readdir(path.resolve("../client/build"), (err, files) => {
+    files.forEach(file => {
+      console.log(file);
+    });
+  });
 
 function removePortIfDev(url) {
     const portRegex = /:[0-9]*$/;
