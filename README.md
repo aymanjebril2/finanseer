@@ -15,6 +15,7 @@ A simple yet powerful personal finance tool.
 4. Add the remote repository `heroku`
 5. On the latest `master` branch you want to deploy from, run `yarn deploy:heroku`
 6. View the deployed web app at https://finanseer.herokuapp.com
+7. View the app logs at https://dashboard.heroku.com/apps/finanseer/logs
 
 
 ## &nbsp;Built With

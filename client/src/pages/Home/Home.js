@@ -38,6 +38,13 @@ const Home = () => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
+
+    setTimeout(() => {
+      try {
+        // This is a hack for styling the mic
+        document.querySelector("holdable-button").shadowRoot.children[1].children[1].shadowRoot.children[1].setAttribute("style", "margin-left: -48px");
+      } catch (error) {}
+    }, 10);
   }, []);
 
   return (
@@ -64,7 +71,7 @@ const Home = () => {
       </div>
 
       <PushToTalkButtonContainer>
-        <div className="themic_div">
+        <div className={ `themic_div${ !loading ? " show" : "" }` }>
           <PushToTalkButton size="6rem" />
         </div>
       </PushToTalkButtonContainer>
