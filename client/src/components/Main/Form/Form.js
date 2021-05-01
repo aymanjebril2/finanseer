@@ -40,7 +40,7 @@ const Form = () => {
   const { addTransaction } = useContext(ExpenseTrackerContext);
   const [formData, setFormData] = useState(initialState);
   const [open, setOpen] = useState(false);
-  console.log("this datat", formData.amount);
+  console.log("this datat", formData);
 
   const createTransaction = () => {
     if (

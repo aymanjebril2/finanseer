@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Home from "./pages/Home/Home";
 import SignUp from "./pages/SignUp/SignUp";
@@ -8,7 +8,9 @@ import Header from "./components/Header/Header";
 import storage from "./utils/storage.js";
 
 function App() {
+  const [isLog, setIsLog] = useState(false);
   const history = useHistory();
+  console.log(isLog);
 
   useEffect(() => {
     storage.checkForLoggedInUser();
@@ -22,11 +24,13 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <Header isLog={isLog} />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/login">
+          <Login setIsLog={setIsLog} />
+        </Route>
       </Switch>
     </div>
   );
