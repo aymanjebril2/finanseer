@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { Collapse, createMuiTheme, ThemeProvider } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -72,6 +73,8 @@ const ResetPassword = () => {
   const location = useLocation();
   const classes = useStyles();
   const [password, setPassword] = useState("");
+  const [alert, revealAlert] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
   const email = (new URLSearchParams(location.search)).get("email");
 
@@ -85,8 +88,9 @@ const ResetPassword = () => {
     });
 
     if (!response.success) {
-      console.error("HANDLE ERROR STATE FOR RESET PASSWORD");
-      return;
+        setErrMsg(response.message)
+        revealAlert(!response.success);
+        return;
     }
   
     history.push("/login");
@@ -131,6 +135,9 @@ const ResetPassword = () => {
                 />
               </Grid>
             </ThemeProvider>
+            <Collapse in={alert}>
+              <Alert severity="error">{errMsg}</Alert>
+            </Collapse>
           </Grid>
           <Button
             type="submit"

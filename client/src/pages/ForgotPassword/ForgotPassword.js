@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { Collapse, createMuiTheme, ThemeProvider } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -71,6 +72,8 @@ const ForgotPassword = () => {
   const history = useHistory();
   const classes = useStyles();
   const [email, setEmail] = useState("");
+  const [alert, revealAlert] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
   async function submit(event) {
     event.preventDefault();
@@ -80,8 +83,9 @@ const ForgotPassword = () => {
     });
 
     if (!response.success) {
-      console.error("HANDLE ERROR STATE FOR FORGOT_PASSWORD");
-      return;
+        setErrMsg(response.message)
+        revealAlert(!response.success);
+        return;
     }
   
     history.push(`/forgot-password-success?email=${ email }&token=${ response.token }`);
@@ -114,6 +118,9 @@ const ForgotPassword = () => {
                 />
               </Grid>
             </ThemeProvider>
+            <Collapse in={alert}>
+              <Alert severity="error">{errMsg}</Alert>
+            </Collapse>
           </Grid>
           <Button
             type="submit"
