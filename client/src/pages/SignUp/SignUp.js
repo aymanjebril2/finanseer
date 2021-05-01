@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -14,6 +14,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import backend from "../../utils/backend.js";
 
 const theme = createMuiTheme({
   palette: {
@@ -69,21 +70,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = () => {
+  const history = useHistory();
   const classes = useStyles();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
 
-  const SignUpUser = async () => {
-    console.log('first name:', firstName);
-    await axios.post(`/api/register`, {
-        "firstName": firstName,
-        "lastName": lastName,
-        "email": signUpEmail,
-        "password": signUpPassword
-      })
-  };
+  async function submit(event) {
+    event.preventDefault();
+  
+    await backend.post("/api/register", {
+      email: signUpEmail,
+      password: signUpPassword,
+      firstName,
+      lastName
+    });
+  
+    history.push("/login");
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -95,7 +100,7 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={ submit }>
           <Grid container spacing={2}>
             <ThemeProvider theme={theme}>
               <Grid item xs={12} sm={6}>
@@ -168,7 +173,6 @@ const SignUp = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={SignUpUser}
           >
             Sign Up
           </Button>

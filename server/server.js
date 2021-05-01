@@ -1,55 +1,45 @@
 import express from "express";
-import bodyParser from "body-parser";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import finance from "./api/finance.js";
+import authenticate from "./api/authentication.js";
+
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  })
-);
+function removePortIfDev(url) {
+    const portRegex = /:[0-9]*$/;
+    return url.replace(portRegex, "");
+}
+
+app.use(cors({
+    origin: (origin, callback) => {
+        /*
+         * Get rid of port number in dev environment to allow other local apps through. Also, sometimes the origin
+         * comes in as the string "null"
+        */
+        const originToCheck = removePortIfDev(!origin || origin === "null" ? "" : origin);
+        const allowlist = [
+            "http://localhost"
+        ];
+
+        if (!originToCheck || allowlist.includes(originToCheck)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true,
+    optionsSuccessStatus: 200
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
+app.use('/api/finance', finance());
+app.use('/api', authenticate());
 
-app.get('/api/hello', (req, res) => {
-  console.log('hello world!')
-  res.send({ express: 'Hello From Express' });
-});
-
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
-
-});
-
-app.get('/api/signin', (req, res) => {
-  if (req.params.email) { //change to proper conditionals
-    if (req.params.password) {
-      res.status(200).send({"success": true});
-    } else {
-      // need basic 400 failure
-      res.status(401).send({ "success": false, "message": 'incorrect password' });
-    }
-  } else {
-    res.status(500).send({ "success": false, "message": 'server error' });
-  }
-});
-
-app.post('/api/register', (req, res) => {
-  if (req.params.email) { // change to proper conditionals
-      res.status(200);
-      // check email as normal
-  } else if ('???') {
-    res.status(401).send({ "success": false, "message": '???' });
-  } else {
-    res.status(500).send({ "success": false, "message": 'server error' });
-  }
-});
+app.use('*', (request, response) => response.status(404).json({ message: "invalid API route" }));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
