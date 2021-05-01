@@ -128,7 +128,7 @@ const ResetPassword = () => {
                     required
                     fullWidth
                     name="password"
-                    label="Password"
+                    label="Passphrase"
                     type="password"
                     id="password"
                     onChange={(e) => setPassword(e.target.value)}
