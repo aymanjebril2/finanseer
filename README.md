@@ -6,11 +6,12 @@
 3. Run `yarn bootstrap`
 4. Run `yarn start`
 
-### To authenticate
-Open your `/etc/hosts` file and add the following entry:
-```
-127.0.0.1   local.herokuapp.com
-```
+### To deploy to heroku
+1. Contact [Spencer Carver](https://github.com/spencer-carver) to get added to finanseer heroku app
+2. Install the heroku cli
+3. Authenticate to your account
+4. Add the remote repository `heroku`
+5. on the latest `master` branch you want to deploy from, run `yarn deploy:heroku`
 
 ## Important Links
 

@@ -1,11 +1,22 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import path from "path";
+import fs from "fs";
 import finance from "./api/finance.js";
 import authenticate from "./api/authentication.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
+
+// client-side routes and assets
+// this is sort-of a hacky workaround for how heroku behaves with react-router
+app.use("/", express.static(path.resolve("../client/build")));
+app.use("/signup", express.static(path.resolve("../client/build")));
+app.use("/login", express.static(path.resolve("../client/build")));
+app.use("/forgot-password", express.static(path.resolve("../client/build")));
+app.use("/forgot-password-success", express.static(path.resolve("../client/build")));
+app.use("/reset-password", express.static(path.resolve("../client/build")));
 
 function removePortIfDev(url) {
     const portRegex = /:[0-9]*$/;
@@ -20,7 +31,8 @@ app.use(cors({
         */
         const originToCheck = removePortIfDev(!origin || origin === "null" ? "" : origin);
         const allowlist = [
-            "http://localhost"
+            "http://localhost",
+            "https://finanseer.herokuapp.com"
         ];
 
         if (!originToCheck || allowlist.includes(originToCheck)) {
@@ -40,6 +52,6 @@ app.use(cookieParser());
 app.use('/api/finance', finance());
 app.use('/api', authenticate());
 
-app.use('*', (request, response) => response.status(404).json({ message: "invalid API route" }));
+app.use('*', (request, response) => response.status(302).redirect("/"));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
