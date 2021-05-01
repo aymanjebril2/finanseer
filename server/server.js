@@ -9,6 +9,17 @@ import authenticate from "./api/authentication.js";
 const app = express();
 const port = process.env.PORT || 5000;
 
+// in production on Heroku - re-route everything to https
+if (process.env.NODE_ENV === "production") {
+    app.use((req, res, next) => {
+        if (req.header('x-forwarded-proto') !== 'https') {
+            res.redirect('https://' + req.hostname + req.url);
+        } else {
+            next()
+        }
+    })
+}
+
 // client-side routes and assets
 // this is sort-of a hacky workaround for how heroku behaves with react-router
 app.use("/", express.static(path.resolve("../client/build")));
@@ -33,7 +44,7 @@ app.use(cors({
         */
         const originToCheck = removePortIfDev(!origin || origin === "null" ? "" : origin);
         const allowlist = [
-            "http://localhost",
+            ...(process.env.NODE_ENV !== "production" ? [ "http://localhost" ] : []),
             "https://finanseer.herokuapp.com"
         ];
 
