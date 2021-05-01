@@ -46,7 +46,7 @@ const Form = () => {
       formData.category !== "" &&
       formData.type !== ""
     ) {
-      if (Number.isNaN(Number(formData.amount)))
+      if (Number.isNaN(Number(formData.amount)) || formData.amount < 0)
         return;
 
       if (incomeCategories.map((iC) => iC.type).includes(formData.category)) {
