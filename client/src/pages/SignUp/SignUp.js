@@ -164,7 +164,7 @@ const SignUp = () => {
                     required
                     fullWidth
                     name="password"
-                    label="Password"
+                    label="Passphrase"
                     type="password"
                     id="password"
                     onChange={(e) => setSignUpPassword(e.target.value)}

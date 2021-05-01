@@ -134,7 +134,7 @@ const Login = ({ setIsLog }) => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Passphrase"
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               id="password"
