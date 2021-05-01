@@ -87,7 +87,7 @@ function getUserByEmail(email) {
 
 function resetUserPassword(email, password, token) {
     const rawData = fs.readFileSync(USERS_DB);
-    const usersTable = JSON.parse(rawData);
+    const userTable = JSON.parse(rawData);
 
     const userCandidate = Object.values(userTable).find(({ email: userEmail }) => email === userEmail);
 
@@ -104,13 +104,13 @@ function resetUserPassword(email, password, token) {
     hash.update(password);
     const saltedPassword = hash.digest('hex');
 
-    usersTable[userCandidate.id] = {
+    userTable[userCandidate.id] = {
         ...userCandidate,
         salt,
         password: saltedPassword
     };
 
-    fs.writeFileSync(USERS_DB, JSON.stringify(usersTable));
+    fs.writeFileSync(USERS_DB, JSON.stringify(userTable));
 }
 
 function addItem(userId, { name, amount, timestamp, category }) {

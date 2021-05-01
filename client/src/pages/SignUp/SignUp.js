@@ -202,7 +202,7 @@ const SignUp = () => {
           >
             Sign Up
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justify="space-around">
             <Grid item>
               <Link
                 href="/login"

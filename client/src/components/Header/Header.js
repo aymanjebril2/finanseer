@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const Header = ({ isLog }) => {
+const Header = ({ isLog, setIsLog }) => {
   const [openLogOut, setOpenLogOut] = useState(false);
   const classes = useStyles();
   const user = JSON.parse(localStorage.getItem("user-info"));
@@ -54,7 +54,7 @@ const Header = ({ isLog }) => {
           </div>
         </Toolbar>
       </AppBar>
-      {openLogOut ? <LogOut /> : ""}
+      {openLogOut ? <LogOut setIsLog={ setIsLog } /> : ""}
     </div>
   );
 };
