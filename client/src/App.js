@@ -6,6 +6,9 @@ import Login from "./pages/Login/Login";
 import { Switch, Route, useHistory } from "react-router-dom";
 import Header from "./components/Header/Header";
 import storage from "./utils/storage.js";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ForgotPasswordSuccess from "./pages/ForgotPassword/Success";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 function App() {
   const [isLog, setIsLog] = useState(false);
@@ -31,6 +34,9 @@ function App() {
         <Route exact path="/login">
           <Login setIsLog={setIsLog} />
         </Route>
+        <Route exact path="/forgot-password" component={ForgotPassword} />
+        <Route exact path="/forgot-password-success" component={ForgotPasswordSuccess} />
+        <Route exact path="/reset-password" component={ResetPassword} />
       </Switch>
     </div>
   );

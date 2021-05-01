@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { createMuiTheme, ThemeProvider, Tooltip } from "@material-ui/core";
+import { useHistory, useLocation } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -69,29 +67,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = () => {
+const ResetPassword = () => {
   const history = useHistory();
+  const location = useLocation();
   const classes = useStyles();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [signUpEmail, setSignUpEmail] = useState("");
-  const [signUpPassword, setSignUpPassword] = useState("");
+  const [password, setPassword] = useState("");
+
+  const email = (new URLSearchParams(location.search)).get("email");
 
   async function submit(event) {
     event.preventDefault();
-
-    const response = await backend.post("/api/register", {
-      email: signUpEmail,
-      password: signUpPassword,
-      firstName,
-      lastName
+  
+    const response = await backend.post("/api/reset-password", {
+      email,
+      password,
+      token: (new URLSearchParams(location.search)).get("token")
     });
 
     if (!response.success) {
-      console.error("HANDLE ERROR STATE FOR SIGNUP");
+      console.error("HANDLE ERROR STATE FOR RESET PASSWORD");
       return;
     }
-
+  
     history.push("/login");
   }
 
@@ -103,36 +100,11 @@ const SignUp = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Reset Password
         </Typography>
         <form className={classes.form} onSubmit={ submit }>
           <Grid container spacing={2}>
             <ThemeProvider theme={theme}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="firstName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  onChange={(e) => setFirstName(e.target.value)}
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  onChange={(e) => setLastName(e.target.value)}
-                  autoComplete="lname"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -141,38 +113,24 @@ const SignUp = () => {
                   id="email"
                   label="Email Address"
                   name="email"
-                  onChange={(e) => setSignUpEmail(e.target.value)}
-                  autoComplete="email"
+                  value={ email }
+                  disabled
                 />
               </Grid>
               <Grid item xs={12}>
-                <Tooltip title="Password must be 16 characters long" placement="left">
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    onChange={(e) => setSignUpPassword(e.target.value)}
-                    autoComplete="current-password"
-                  />
-                </Tooltip>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                />
               </Grid>
             </ThemeProvider>
-
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="allowExtraEmails"
-                    style={{ color: "rgba(121,9,113,1)" }}
-                  />
-                }
-                label="I Agree on Terms and Conditions agreement and  a Privacy Policy ."
-              />
-            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -181,19 +139,8 @@ const SignUp = () => {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Submit
           </Button>
-          <Grid container justify="space-around">
-            <Grid item>
-              <Link
-                href="/login"
-                variant="body2"
-                style={{ color: "rgba(121,9,113,1)" }}
-              >
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={5}>
@@ -203,4 +150,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default ResetPassword;
