@@ -8,20 +8,7 @@ import authenticate from "./api/authentication.js";
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.enable('trust proxy');
-
-// in production on Heroku - re-route everything to https
-if (process.env.NODE_ENV === "production") {
-  app.use((req, res, next) => {
-    console.log(req.header('x-forwarded-proto'));
-
-    if (req.header('x-forwarded-proto') !== 'https') {
-      res.redirect('https://' + req.hostname + req.url);
-    } else {
-      next()
-    }
-  })
-}
+app.use(express.static(path.resolve("../client/build")));
 
 function removePortIfDev(url) {
     const portRegex = /:[0-9]*$/;
@@ -56,8 +43,6 @@ app.use(cookieParser());
 
 app.use('/api/finance', finance());
 app.use('/api', authenticate());
-
-app.use(express.static(path.resolve("../client/build")));
 
 app.use('*', (request, response) => response.status(302).redirect("/"));
 
