@@ -8,7 +8,7 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
-import { createMuiTheme, ThemeProvider, Collapse } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider, Collapse, Typography } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from "../Snackbar/Snackbar";
 import formatDate from "../../../utils/formatDate";
