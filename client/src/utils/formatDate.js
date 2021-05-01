@@ -1,4 +1,4 @@
-export default (date) => {
+export default function formatDate(date) {
   const d = new Date(date);
   d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
 

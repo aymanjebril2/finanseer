@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Collapse, createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { Collapse, createMuiTheme, ThemeProvider, Tooltip } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -80,7 +80,7 @@ const ResetPassword = () => {
 
   async function submit(event) {
     event.preventDefault();
-  
+
     const response = await backend.post("/api/reset-password", {
       email,
       password,
@@ -92,7 +92,7 @@ const ResetPassword = () => {
         revealAlert(!response.success);
         return;
     }
-  
+
     history.push("/login");
   }
 
@@ -122,17 +122,19 @@ const ResetPassword = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                />
+                <Tooltip title="Passphrase must be 16 characters long" placement="left">
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                  />
+                </Tooltip>
               </Grid>
             </ThemeProvider>
             <Collapse in={alert}>

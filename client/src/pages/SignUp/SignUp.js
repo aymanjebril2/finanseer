@@ -158,7 +158,7 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Tooltip title="Password must be 16 characters long" placement="left">
+                <Tooltip title="Passphrase must be 16 characters long" placement="left">
                   <TextField
                     variant="outlined"
                     required

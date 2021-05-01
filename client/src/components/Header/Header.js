@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 import logo from "./img/crystal-ball.png";
 import Avatar from "@material-ui/core/Avatar";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import IconButton from "@material-ui/core/IconButton";
 import LogOut from "./LogOut/LogOut";
-import { deepOrange } from "@material-ui/core/colors";
-import storage from "../../utils/storage.js";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
