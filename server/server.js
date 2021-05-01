@@ -9,9 +9,9 @@ import authenticate from "./api/authentication.js";
 const app = express();
 const port = process.env.PORT || 5000;
 
+// client-side routes and assets
+// this is sort-of a hacky workaround for how heroku behaves with react-router
 app.use("/", express.static(path.resolve("../client/build")));
-
-// client-side routes
 app.use("/signup", express.static(path.resolve("../client/build")));
 app.use("/login", express.static(path.resolve("../client/build")));
 app.use("/forgot-password", express.static(path.resolve("../client/build")));
