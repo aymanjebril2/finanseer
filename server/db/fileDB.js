@@ -17,8 +17,6 @@ function addUser({ email, password, firstName, lastName }) {
     const rawData = fs.readFileSync(USERS_DB);
     const usersTable = JSON.parse(rawData);
 
-    console.log(USERS_DB);
-
     let id = crypto.randomBytes(8).toString("hex");
 
     while (!!usersTable[id]) {
