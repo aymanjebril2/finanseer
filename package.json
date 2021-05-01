@@ -9,7 +9,8 @@
     "start:server": "cd server && yarn start",
     "start:client": "cd client && yarn start",
     "start": "concurrently \"yarn start:client\" \"yarn start:server\"",
-    "deploy:heroku": "cat client/heroku.gitignore > client/.gitignore && yarn build:client && git push heroku heroku:heroku && cat client/base.gitignore > client/.gitignore"
+    "start:heroku": "cd server && yarn install && NODE_ENV=production yarn start",
+    "deploy:heroku": "cat client/heroku.gitignore > client/.gitignore && yarn build:client && git push heroku heroku:master && cat client/base.gitignore > client/.gitignore"
   },
   "devDependencies": {
     "concurrently": "^6.0.2"

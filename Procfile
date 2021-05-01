@@ -1,1 +1,1 @@
-web: cd server && yarn install && yarn start
+web: yarn start:heroku
