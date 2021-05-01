@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
@@ -7,8 +8,10 @@ import logo from "./img/crystal-ball.png";
 import Avatar from "@material-ui/core/Avatar";
 import { Link } from "react-router-dom";
 import "./Header.css";
+
 import IconButton from "@material-ui/core/IconButton";
 import LogOut from "./LogOut/LogOut";
+
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -22,6 +25,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
+
 const Header = ({ isLog, setIsLog }) => {
   const location = useLocation();
   const [openLogOut, setOpenLogOut] = useState(false);
@@ -30,6 +34,7 @@ const Header = ({ isLog, setIsLog }) => {
   const handleLogout = () => {
     setOpenLogOut((open) => !open);
   };
+
 
   return (
     <div>
@@ -50,6 +55,7 @@ const Header = ({ isLog, setIsLog }) => {
             </div>
           }
           <div>
+
             {isLog ? (
               <IconButton onClick={handleLogout}>
                 <Avatar alt="" src="" className={classes.orange}>
@@ -59,6 +65,7 @@ const Header = ({ isLog, setIsLog }) => {
             ) : (
               ""
             )}
+
           </div>
         </Toolbar>
       </AppBar>

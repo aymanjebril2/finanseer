@@ -28,23 +28,6 @@ const theme = createMuiTheme({
   },
 });
 
-const Copyright = () => {
-  return (
-    <Typography
-      variant="body2"
-      style={{ color: "rgba(121,9,113,1)" }}
-      align="center"
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="">
-        Finanseer
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(18),
@@ -88,7 +71,7 @@ const SignUp = () => {
       email: signUpEmail,
       password: signUpPassword,
       firstName,
-      lastName
+      lastName,
     });
 
     if (!response.success) {
@@ -117,7 +100,7 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} onSubmit={ submit }>
+        <form className={classes.form} onSubmit={submit}>
           <Grid container spacing={2}>
             <ThemeProvider theme={theme}>
               <Grid item xs={12} sm={6}>
@@ -215,9 +198,7 @@ const SignUp = () => {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+      <Box mt={5}></Box>
     </Container>
   );
 };
