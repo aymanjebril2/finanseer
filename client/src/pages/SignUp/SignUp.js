@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "rgba(121,9,113,1)",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -67,15 +68,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SingUp = () => {
+const SignUp = () => {
   const classes = useStyles();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
-  const [sinUpPassowrd, setSinUpPassowrd] = useState("");
+  const [signUpPassword, setSignUpPassword] = useState("");
 
-  const SingupUser = () => {
-    console.log(firstName);
+  const SignUpUser = async () => {
+    console.log('first name:', firstName);
+    await axios.post(`/api/register`, {
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": signUpEmail,
+        "password": signUpPassword
+      })
   };
 
   return (
@@ -137,7 +144,7 @@ const SingUp = () => {
                   label="Password"
                   type="password"
                   id="password"
-                  onChange={(e) => setSinUpPassowrd(e.target.value)}
+                  onChange={(e) => setSignUpPassword(e.target.value)}
                   autoComplete="current-password"
                 />
               </Grid>
@@ -161,7 +168,7 @@ const SingUp = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={SingupUser}
+            onClick={SignUpUser}
           >
             Sign Up
           </Button>
@@ -185,4 +192,4 @@ const SingUp = () => {
   );
 };
 
-export default SingUp;
+export default SignUp;
