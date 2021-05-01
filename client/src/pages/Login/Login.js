@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = ({ setIsLog }) => {
   const history = useHistory();
   const classes = useStyles();
   const [email, setEmail] = useState("");
@@ -79,25 +79,26 @@ const Login = () => {
 
   async function submit(event) {
     event.preventDefault();
-  
+
     const remember = !!document.getElementById("remember").checked;
-  
+
     const response = await backend.post("/api/signin", {
       email,
       password,
-      remember
+      remember,
     });
-  
+
     if (!response.success) {
       console.error("HANDLE ERROR STATE FOR LOGIN");
 
       return;
     }
-  
+
     storage.setAuthTokens(response.id, response.token, remember);
     storage.setUserInfo(response.email, response.firstName, response.lastName);
 
     history.push("/");
+    setIsLog((log) => !log);
   }
 
   return (
@@ -110,7 +111,7 @@ const Login = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={ submit }>
+        <form className={classes.form} noValidate onSubmit={submit}>
           <ThemeProvider theme={theme}>
             <TextField
               variant="outlined"
@@ -139,10 +140,7 @@ const Login = () => {
           </ThemeProvider>
           <FormControlLabel
             control={
-              <Checkbox
-                id="remember"
-                style={{ color: "rgba(121,9,113,1)" }}
-              />
+              <Checkbox id="remember" style={{ color: "rgba(121,9,113,1)" }} />
             }
             label="Remember me"
           />
