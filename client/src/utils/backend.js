@@ -2,13 +2,13 @@ import storage from "./storage.js";
 
 const BACKEND_URL = "http://localhost:5000";
 
-async function post(relativePath, requestBody) {
+async function post(relativePath, requestBody = {}) {
     const response = await (await window.fetch(`${ BACKEND_URL }${ relativePath }`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "X-User-Id": storage.getUserId(),
-        "X-User-Token": storage.getUserToken()
+        "x-user-id": storage.getUserId(),
+        "x-user-token": storage.getUserToken()
       },
       credentials: "same-origin",
       body: JSON.stringify(requestBody)
@@ -26,8 +26,8 @@ async function get(relativePath) {
       method: "GET",
       headers: {
         "content-type": "application/json",
-        "X-User-Id": storage.getUserId(),
-        "X-User-Token": storage.getUserToken()
+        "x-user-id": storage.getUserId(),
+        "x-user-token": storage.getUserToken()
       },
       credentials: "same-origin"
     })).json();
@@ -39,13 +39,13 @@ async function get(relativePath) {
     return response;
 }
 
-async function del(relativePath, requestBody) {
+async function del(relativePath, requestBody = {}) {
     const response = await (await window.fetch(`${ BACKEND_URL }${ relativePath }`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
-        "X-User-Id": storage.getUserId(),
-        "X-User-Token": storage.getUserToken()
+        "x-user-id": storage.getUserId(),
+        "x-user-token": storage.getUserToken()
       },
       credentials: "same-origin",
       body: JSON.stringify(requestBody)

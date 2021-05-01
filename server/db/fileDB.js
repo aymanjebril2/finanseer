@@ -113,7 +113,7 @@ function resetUserPassword(email, password, token) {
     fs.writeFileSync(USERS_DB, JSON.stringify(usersTable));
 }
 
-function addItem(userId, { name, value, timestamp, category }) {
+function addItem(userId, { name, amount, timestamp, category }) {
     const rawData = fs.readFileSync(ITEMS_DB);
     const itemsTable = JSON.parse(rawData);
 
@@ -127,12 +127,19 @@ function addItem(userId, { name, value, timestamp, category }) {
         id,
         userId,
         name,
-        value,
+        amount,
         timestamp,
         category
     };
 
     fs.writeFileSync(ITEMS_DB, JSON.stringify(itemsTable));
+}
+
+function getItems(userId) {
+    const rawData = fs.readFileSync(ITEMS_DB);
+    const itemsTable = JSON.parse(rawData);
+
+    return Object.values(itemsTable).filter(({ userId: itemUserId }) => itemUserId === userId);
 }
 
 function getMonthlyItems(userId, month, year) {
@@ -148,11 +155,28 @@ function getMonthlyItems(userId, month, year) {
     });
 }
 
+function deleteItem(userId, itemId) {
+    const rawData = fs.readFileSync(ITEMS_DB);
+    const itemsTable = JSON.parse(rawData);
+
+    const item = Object.values(itemsTable).find((item) => item.id === itemId && item.userId === userId);
+
+    if (!item) {
+        throw new Error("Item to delete not found");
+    }
+
+    delete itemsTable[itemId];
+
+    fs.writeFileSync(ITEMS_DB, JSON.stringify(itemsTable));
+}
+
 export default {
     addUser,
     authenticateUser,
     getUserByEmail,
     resetUserPassword,
     addItem,
-    getMonthlyItems
+    getItems,
+    getMonthlyItems,
+    deleteItem
 };

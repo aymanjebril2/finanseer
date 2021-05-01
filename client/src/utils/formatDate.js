@@ -1,5 +1,7 @@
 export default (date) => {
   const d = new Date(date);
+  d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
+
   let month = `${d.getMonth() + 1}`;
   let day = `${d.getDate()}`;
   const year = d.getFullYear();
