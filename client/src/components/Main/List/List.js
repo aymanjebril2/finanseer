@@ -14,6 +14,7 @@ import LoadingSpinner from "../../LoadingSpinner";
 import { ExpenseTrackerContext } from "../../../context/context";
 import backend from "../../../utils/backend";
 import formatDate from "../../../utils/formatDate";
+import formatPrice from "../../../utils/formatPrice";
 import useStyles from "./styles";
 
 const List = () => {
@@ -62,7 +63,7 @@ const List = () => {
             </ListItemAvatar>
             <ListItemText
               primary={transaction.category}
-              secondary={`$${transaction.amount} - ${formatDate(transaction.timestamp)}`}
+              secondary={`${formatPrice(transaction.amount)} - ${formatDate(transaction.timestamp)}`}
             />
             <ListItemSecondaryAction>
               <IconButton
