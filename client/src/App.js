@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header isLog={isLog} />
+      <Header isLog={isLog} setIsLog={setIsLog} />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/signup" component={SignUp} />
