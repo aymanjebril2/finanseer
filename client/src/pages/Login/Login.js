@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from 'axios';
+import { useHistory } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -14,6 +14,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import storage from "../../utils/storage.js";
+import backend from "../../utils/backend.js";
 import "./Login.css";
 
 const theme = createMuiTheme({
@@ -70,19 +72,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
+  const history = useHistory();
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginUser = async () => {
-    console.log('email:', email);
-    const res = await axios.get(`/api/signin/`, {
-      params: {
-        email,
-        password
-      }
-    })
-    console.log('res:', res)
+  async function submit(event) {
+    event.preventDefault();
+  
+    const remember = !!document.getElementById("remember").checked;
+  
+    const response = await backend.post("/api/signin", {
+      email,
+      password,
+      remember
+    });
+  
+    if (!response.success) {
+      console.error("HANDLE ERROR STATE FOR LOGIN");
+
+      return;
+    }
+  
+    storage.setAuthTokens(response.id, response.token, remember);
+    storage.setUserInfo(response.email, response.firstName, response.lastName);
+
+    history.push("/");
   }
 
   return (
@@ -95,7 +110,7 @@ const Login = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={ submit }>
           <ThemeProvider theme={theme}>
             <TextField
               variant="outlined"
@@ -125,7 +140,7 @@ const Login = () => {
           <FormControlLabel
             control={
               <Checkbox
-                value="remember"
+                id="remember"
                 style={{ color: "rgba(121,9,113,1)" }}
               />
             }
@@ -138,7 +153,6 @@ const Login = () => {
             variant="contained"
             // color="rgba(121,9,113,1)"
             className={classes.submit}
-            onClick={loginUser}
           >
             Sign In
           </Button>

@@ -4,7 +4,13 @@
 1. Install Node v16
 2. Install yarn (`npm install -g yarn`)
 3. Run `yarn bootstrap`
-4. Run `yarn start'
+4. Run `yarn start`
+
+### To authenticate
+Open your `/etc/hosts` file and add the following entry:
+```
+127.0.0.1   local.herokuapp.com
+```
 
 ## Important Links
 
