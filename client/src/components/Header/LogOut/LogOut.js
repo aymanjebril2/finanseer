@@ -23,6 +23,7 @@ const LogOut = ({ setIsLog }) => {
   return (
     <div className="logout_div">
       <h2> {`${user.firstName} ${user.lastName}`}</h2>
+      <h3>{user.email}</h3>
       <div className="logoutBtn">
         <Button variant="contained" color="primary" onClick={ handleLogout }>
           Log Out
