@@ -46,8 +46,8 @@
 
 ## 🛠 Built With 🛠 
 
-| 
 | [![Node.js logo](assets/logos/nodejs-logo.png)](https://nodejs.org/en/) | [![Express.js logo](assets/logos/expressjs-logo.png)](https://expressjs.com/) | [![React.js logo](assets/logos/reactjs-logo.png)](https://reactjs.org/) | [![Chart.js logo](assets/logos/chartjs-logo.png)](https://www.chartjs.org/) | [![Material-UI logo](assets/logos/material-ui-logo.png)](https://material-ui.com/) | [![Speachly logo](assets/logos/speechly-logo.png)](https://www.speechly.com/) |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 
 ## 👤👤 Team 👤👤
 
